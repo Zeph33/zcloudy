@@ -3,7 +3,7 @@
  * and returns a promise
  */
 
-import api from '../config/api'
+import api from './remote'
 
 let endpoints = {
   login: '/auth/local'

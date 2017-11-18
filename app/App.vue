@@ -6,7 +6,7 @@
       v-alert(color="error" v-model="msg.error.show" dismissible) {{ msg.error.msg }}
       v-alert(color="warning" v-model="msg.warning.show" dismissible) {{ msg.warning.msg }}
       v-alert(color="info" v-model="msg.info.show" dismissible) {{ msg.info.msg }}
-    v-navigation-drawer(ref="vnav" dark stateless fixed :mini-variant="miniVariant" :clipped="clipped" mini-variant-width="55" width="180" v-model="drawer" app)
+    v-navigation-drawer(ref="vnav" dark stateless fixed :mini-variant="mini" :clipped="clipped" mini-variant-width="55" width="180" v-model="drawer" app)
       v-list
         v-list-tile(v-for="(item, i) in items" :key="i" router :to="item.to")
           v-list-tile-action
@@ -15,8 +15,8 @@
             v-list-tile-title(v-text="item.title")
     v-toolbar(color="primary" dark clipped-left fixed app)
       v-toolbar-side-icon(@click="drawer = !drawer")
-      v-btn(icon @click.native.stop="mini()")
-        v-icon(v-html="miniVariant ? 'chevron_right' : 'chevron_left'")
+      v-btn(icon @click.native.stop="toggleMini()")
+        v-icon(v-html="mini ? 'chevron_right' : 'chevron_left'")
       //- v-btn(icon @click.native.stop="clipped = !clipped")
       //-   v-icon web
       //- v-btn(icon @click.native.stop="fixed = !fixed")
@@ -54,24 +54,22 @@
           error: { show:false, msg: '', timeout: null }
         },
         items: [
-          { title: 'File', to: '/', icon: 'insert_drive_file' },
-          { title: 'Gallery', to: '/file', icon: 'insert_photo' },
-          { title: 'Calendar', to: '/calendar', icon: 'insert_invitation', disabled: false },
-          { title: 'Contact', to: '/conatct', icon: 'people', disabled: false },
+          { title: 'Files', to: '/files', icon: 'insert_drive_file' },
+          { title: 'Pictures', to: '/pictures', icon: 'insert_photo' },
+          { title: 'Calendars', to: '/calendars', icon: 'insert_invitation', disabled: false },
+          { title: 'Contacts', to: '/contacts', icon: 'people', disabled: false },
           { title: 'Settings', to: '/settings', icon: 'settings', disabled: false },
         ],
-        miniVariant: true,
         right: true,
         rightDrawer: false,
-        title: 'zHost Cloud (Vue.js - Vuetify)'
       }
     },
     created: function() {
       window.app = this
     },
     methods: {
-      mini() {
-        this.miniVariant = !this.miniVariant
+      toggleMini() {
+        this.setMini(!this.mini)
         this.$nextTick(this.$refs.vnav.updateApplication)
       },
       showerror(msg) { this.showmsg(msg, 'error')},

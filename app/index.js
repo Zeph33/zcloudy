@@ -1,21 +1,20 @@
 import Router from 'vue-router'
-import routes from './config/routes'
-import routerHooks from './config/routes/hooks'
-import store from './vuex-store'
+import routes from './routes'
+import {store, mixins } from './store'
 import App from './App'
+import components from './components'
+
+// add components
+components.forEach(component => Vue.component(component.name, component))
+// add all mixins storage
+mixins.forEach( mixin => Vue.mixin(mixin) )
 
 Vue.use(Router)
-
 const router = new Router({
   routes,
   mode: 'history',
   saveScrollPosition: true
 })
-
-// Add the loginRequired hook before each state transition
-// router.beforeEach(routerHooks.loginRequired)
-// const router = null
-// const store = null
 
 const app = new Vue({
   el: '#app',

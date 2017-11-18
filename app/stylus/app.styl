@@ -1,2 +1,14 @@
-.main
-    background: red
+// on constriut le color-pack pour toute l'application pas uniqument pour vuetify
+$color-pack = false
+@require '../../node_modules/vuetify/src/stylus/settings/*'
+for heading, options in $headings
+  {heading}
+    font-size: options.size
+    font-weight: options.weight
+    if options.line-height
+      line-height: options.line-height
+    if options.letter-spacing
+      letter-spacing: options.letter-spacing
+    margin-bottom: $spacers.three.y
+    @media screen and (max-width: $grid-breakpoints.sm)
+      font-size: options.size * .6
