@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title Zeph Cloud Host power by Vue.js with Vuetify Framework
+    meta(charset="utf-8")
+    meta(http-equiv="x-ua-compatible" content="ie=edge")
+    meta(name="description" content="Production manager for all!")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    //- link(href="css/font-awesome.min.css" rel="stylesheet" type="text/css")
+    link(href="css/roboto-material-icon.css" rel="stylesheet" type="text/css")
+    link(href="css/vuetify"+ MIN +".css" rel="stylesheet" type="text/css")
+    link(href="css/components.css" rel="stylesheet" type="text/css")
+    link(href="css/app.css" rel="stylesheet" type="text/css")
+    script(type="text/javascript" src="js/vue.runtime"+ MIN +".js")
+    script(type="text/javascript" src="js/vuetify"+ MIN +".js")
+  body
+    div(id="app")
+    script(type="text/javascript" src="vendor.js")
+    script(type="text/javascript" src="app.js")
+    script(type="text/javascript")
+      |require('index')

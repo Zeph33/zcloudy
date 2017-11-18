@@ -1,0 +1,67 @@
+/*
+woff modern browser
+truetype mac safari
+eot IE8
+svg iPhone
+*/
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'),
+       url(./fonts/material-icons.woff) format('woff'),
+       url(./fonts/material-icons.ttf) format('truetype'),
+       url(./fonts/material.svg) format('svg'),
+       url(./fonts/material-icons.eot);
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Light'), local('Roboto-Light'),
+       url(./fonts/roboto-300.woff) format('woff'),
+       url(./fonts/roboto-300.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'),
+       url(./fonts/roboto-400.woff) format('woff'),
+       url(./fonts/roboto-400.ttf) format('truetype'),
+       url(./fonts/roboto.svg) format('svg'),
+       url(./fonts/roboto.eot);
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Roboto Medium'), local('Roboto-Medium'),
+       url(./fonts/roboto-500.woff) format('woff'),
+       url(./fonts/roboto-500.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Bold'), local('Roboto-Bold'),
+       url(./fonts/roboto-700.woff) format('woff'),
+       url(./fonts/roboto-700.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+/*  -moz-font-feature-settings: 'liga=1'; */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
