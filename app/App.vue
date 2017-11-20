@@ -37,7 +37,7 @@
           v-list-tile-title Switch drawer (click me)
     v-footer(dark :fixed="fixed" app)
       v-spacer
-      div &copy; {{ new Date().getFullYear() }} by Zeph
+      v-btn.no-text-transform(flat color="primary" href="https://zcloudy.com" target="_blank") zCloudy &copy; {{ new Date().getFullYear() }} by Zeph
 </template>
 
 <script>
@@ -92,6 +92,8 @@
 </script>
 
 <style lang="stylus">
+  .no-text-transform
+    text-transform: none
   .navigation-drawer--mini-variant .list__tile
     padding: 0 4px
   #alertemsg
