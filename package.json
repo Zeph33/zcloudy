@@ -61,15 +61,15 @@
     "uglify-js-brunch": "^2.10.0",
     "vue-brunch": "^2.0.1",
     "vue-loader": "^13.5.0",
-    "vue-template-compiler": "^2.5.5",
+    "vue-template-compiler": "^2.5.8",
     "vueify": "^9.4.1"
   },
   "dependencies": {
     "cross-env": "^5.1.1",
     "path": "^0.12.7",
-    "vue": "^2.5.5",
+    "vue": "^2.5.8",
     "vue-router": "^3.0.1",
-    "vuetify": "0.17.1",
+    "vuetify": "0.17.2",
     "vuex": "^3.0.1"
   }
 }
