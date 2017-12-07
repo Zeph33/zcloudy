@@ -3,7 +3,10 @@ const minJsCss = prod ? '.min' : ''
 const vuetifySrc = prod ? 'js' : 'dist'
 let arCopyCSS = ['node_modules/vuetify/dist/vuetify'+minJsCss+'.css']
 let arCopyJS = ['node_modules/vuetify/dist/vuetify'+minJsCss+'.js', 'node_modules/vue/dist/vue.runtime'+minJsCss+'.js']
-if(!prod) arCopyJS.push('node_modules/vuetify/dist/vuetify.js.map')
+if(!prod) {
+  arCopyJS.push('node_modules/vuetify/dist/vuetify.js.map')
+  arCopyCSS.push('node_modules/vuetify/dist/vuetify.css.map')
+}
 
 module.exports = {
   files: {
@@ -16,7 +19,7 @@ module.exports = {
     stylesheets: {
       joinTo: {
         'css/app.css': /^app/
-        }
+      }
     },
     templates: {
       joinTo: 'app.js'
@@ -27,7 +30,7 @@ module.exports = {
   },
   plugins: {
     stylus: {
-        modules: true
+      modules: true
     },
     pug: {
       locals: { MIN: minJsCss , VUETIFY_SRC: vuetifySrc},
