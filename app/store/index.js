@@ -7,6 +7,6 @@ window && window.Vue && window.Vue.use(Vuex)
 export const mixins = [settingsMix]
 export const store = new Vuex.Store({
   modules: {
-     settings
+    settings
   }
 })

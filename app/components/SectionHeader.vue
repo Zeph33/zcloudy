@@ -1,23 +1,51 @@
-<template lang="pug">
-  h5(class="section-header" :style="styles") {{ text }}
-    slot
-</template>
-
 <script>
 export default {
   name: 'SectionHeader',
   props: {
-    first: Boolean,
-    text: String
+    top: {
+      type: Number,
+      default: 0
+    },
+    text: {
+      type: String,
+      default: ''
+    },
+    level: {
+      type: Number,
+      default: 5
+    },
+    nomargin: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
     styles () {
       const styles = {}
-      if (this.first) {
-        styles['margin-top'] = 0
+      if (this.nomargin) {
+        styles['margin'] = '0'
+      }
+      if (this.top>0) {
+        styles['margin-top'] = this.top+'px'
       }
       return styles
     }
+  },
+  render(h) {
+    return h(
+      'h' + this.level,   // tag name
+      {
+        'class': {
+          'section-header': true,
+          'primary--after': true
+        },
+        style: this.styles
+      },
+      [
+        this.text,
+        this.$slots.default // array of children
+      ]
+    )
   }
 }
 </script>

@@ -41,54 +41,54 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        clipped: true,
-        drawer: true,
-        fixed: true,
-        error: false,
-        msg: {
-          info: { show:false, msg: '', timeout: null },
-          warning: { show:false, msg: '', timeout: null },
-          error: { show:false, msg: '', timeout: null }
-        },
-        items: [
-          { title: 'Files', to: '/files', icon: 'insert_drive_file' },
-          { title: 'Pictures', to: '/pictures', icon: 'insert_photo' },
-          { title: 'Calendars', to: '/calendars', icon: 'insert_invitation', disabled: false },
-          { title: 'Contacts', to: '/contacts', icon: 'people', disabled: false },
-          { title: 'Settings', to: '/settings', icon: 'settings', disabled: false },
-        ],
-        right: true,
-        rightDrawer: false,
-      }
-    },
-    created: function() {
-      window.app = this
-    },
-    methods: {
-      toggleMini() {
-        this.setMini(!this.mini)
-        this.$nextTick(this.$refs.vnav.updateApplication)
+export default {
+  data () {
+    return {
+      clipped: true,
+      drawer: true,
+      fixed: true,
+      error: false,
+      msg: {
+        info: { show:false, msg: '', timeout: null },
+        warning: { show:false, msg: '', timeout: null },
+        error: { show:false, msg: '', timeout: null }
       },
-      showerror(msg) { this.showmsg(msg, 'error')},
-      showwarning(msg) { this.showmsg(msg, 'warning')},
-      showmsg(msg, type='info') {
-        const m = this.clearmsg(type)
-        m.msg = msg
-        m.show = true
-        m.timeout = setTimeout(() => { m.show = false }, 4000)
-      },
-      clearmsg(type='info') {
-        const m = this.msg[type] || this.msg.info
-        m.timeout && clearTimeout(m.timeout)
-        m.msg = ''
-        m.show = false
-        return m
-      }
+      items: [
+        { title: 'Files', to: '/files', icon: 'insert_drive_file' },
+        { title: 'Pictures', to: '/pictures', icon: 'insert_photo' },
+        { title: 'Calendars', to: '/calendars', icon: 'insert_invitation', disabled: false },
+        { title: 'Contacts', to: '/contacts', icon: 'people', disabled: false },
+        { title: 'Settings', to: '/settings', icon: 'settings', disabled: false },
+      ],
+      right: true,
+      rightDrawer: false,
+    }
+  },
+  created: function() {
+    window.app = this
+  },
+  methods: {
+    toggleMini() {
+      this.setMini(!this.mini)
+      this.$nextTick(this.$refs.vnav.updateApplication)
+    },
+    showerror(msg) { this.showmsg(msg, 'error')},
+    showwarning(msg) { this.showmsg(msg, 'warning')},
+    showmsg(msg, type='info') {
+      const m = this.clearmsg(type)
+      m.msg = msg
+      m.show = true
+      m.timeout = setTimeout(() => { m.show = false }, 4000)
+    },
+    clearmsg(type='info') {
+      const m = this.msg[type] || this.msg.info
+      m.timeout && clearTimeout(m.timeout)
+      m.msg = ''
+      m.show = false
+      return m
     }
   }
+}
 </script>
 
 <style lang="stylus">
