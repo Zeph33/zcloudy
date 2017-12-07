@@ -4,13 +4,17 @@ import createLocalState from './store/localstorage'
 import {store, mixins } from './store'
 import App from './App'
 import components from './components'
+import axios from 'axios'
+
+Vue.prototype.$http = axios
 
 // add components
 components.forEach(component => Vue.component(component.name, component))
 // add all mixins storage
 mixins.forEach( mixin => Vue.mixin(mixin) )
 
-createLocalState({ states: ['settings'] })(store)
+//createLocalState({ states: ['settings'] })(store)
+createLocalState({})(store)
 
 Vue.use(Router)
 const router = new Router({
@@ -19,7 +23,7 @@ const router = new Router({
   saveScrollPosition: true
 })
 
-const app = new Vue({
+export const app = new Vue({
   el: '#app',
   router,
   store,
