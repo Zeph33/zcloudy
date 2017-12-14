@@ -1,5 +1,5 @@
 'use strict'
-export { isObject, isEmpty, isArray, isBoolean, hasProperty, toString, objSet, objGet, merge, zHttp }
+export { isObject, isEmpty, isArray, isBoolean, hasProperty, toString, objSet, objGet, merge }
 
 function hasProperty(obj, prop) {
   if (obj == null) {
@@ -93,47 +93,4 @@ function merge(target) {
     assign(target, JSON.parse(JSON.stringify(arguments[s])))
   }
   return target
-}
-
-
-function zHttp(url, options) {
-  let opt = merge({
-    transport: new XMLHttpRequest(),
-    method: 'POST',
-    data: '',
-    content: 'application/json',
-    useCache: false
-  }, options || {})
-  if (!opt.useCache)
-    url += (url.indexOf('?', 0) === -1 ? '?' : '&') + 'dummy=' + (new Date()).getTime()
-  return new Promise((resolve, reject) => {
-    const xhr = opt.transport
-    xhr.open(opt.method, url)
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4) {
-        const status = xhr.status
-        if(status >= 200 && status < 300 || status === 304) {
-          resolve(xhr.getResponseHeader('content-type').split(';', 2)[0] == 'application/json' ? JSON.parse(xhr.responseText) : xhr.responseText, xhr)
-        } else {
-          reject(xhr)
-        }
-      }        
-    }
-    xhr.send(JSON.stringify(opt.data))
-  })    
-}
-
-zHttp.request = function( type, url, options) {
-  let opt = options || {}
-  opt.method = type
-  return new zHttp(url,opt)
-}
-zHttp.Get = function(url, opt) {
-  return zHttp.request('GET',url, opt)
-}
-zHttp.Post = function(url, opt) {
-  return zHttp.request('POST',url, opt)
-}
-zHttp.Del = function(url, opt) {
-  return zHttp.request('DELETE',url, opt)
 }
