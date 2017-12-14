@@ -4,9 +4,9 @@ import createLocalState from './store/localstorage'
 import {store, mixins } from './store'
 import App from './App'
 import components from './components'
-import axios from 'axios'
+import {zHttp} from './utils'
 
-Vue.prototype.$http = axios
+Vue.prototype.$http = window.zHttp = zHttp
 
 // add components
 components.forEach(component => Vue.component(component.name, component))
