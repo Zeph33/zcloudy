@@ -1,5 +1,5 @@
 'use strict'
-export { getObjectValueByPath, isObject, isEmpty, isArray, isBoolean, hasProperty, toString, objSet, objGet, merge }
+export { humanSize, getObjectValueByPath, isObject, isEmpty, isArray, isBoolean, hasProperty, toString, objSet, objGet, merge }
 
 function hasProperty(obj, prop) {
   if (obj == null) {
@@ -110,4 +110,19 @@ function getObjectValueByPath (obj, path) {
     }
   }
   return obj
+}
+
+function humanSize(size) {
+  let unit = 'octets'
+  let sSize = size
+  const change = (u) => {
+    if(sSize>1024) {
+      sSize /= 1024
+      unit = u
+    }
+  }
+  change('Ko')
+  change('Mo')
+  change('Go')
+  return Math.round(sSize*10)/10 + ' ' + unit
 }
