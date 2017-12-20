@@ -2,26 +2,29 @@
   div
     SectionHeader(nomargin)
       v-breadcrumbs(large)
-        v-breadcrumbs-item(v-for="(path, idx) in arPath" :key="idx") {{ path }}
-    v-data-table.elevation-1(:headers="headers" :items="content" :custom-sort="customSort" :rows-per-page-items="[25,50,{ text: 'All', value: -1 }]")
+        v-breadcrumbs-item(v-for="(path, idx) in arPath" @click.native="moveToPathIndex(idx)") {{ path }}
+    v-data-table.elevation-1(v-model="selected" select-all :headers="headers" :items="content" :custom-sort="customSort" :rows-per-page-items="[25,50,{ text: 'All', value: -1 }]")
       template(slot="items" slot-scope="props")
-        td {{ props.item.id }}
-        td.text-xs-right {{ props.item.size }}
-        td.text-xs-right {{ props.item.birthtime }}
-        td.text-xs-right {{ props.item.mtime }}
+        td: v-checkbox(primary hide-details v-model="props.selected")
+        td.headline(@click="openItem(props.item)")
+          v-icon.pa-2(:color="itemColor(props.item)" large) {{ itemIcon(props.item) }}
+          | {{ props.item.id }}
+        td.text-xs-right {{ props.item.isfile ? $utils.humanSize(props.item.size) : '' }}
+        td.text-xs-right {{ new Date(props.item.birthtime).toLocaleString() }}
+        td.text-xs-right {{ new Date(props.item.mtime).toLocaleString() }}
 </template>
 
 <script>
-import { getObjectValueByPath } from '../utils'
 export default {
   name: "Files",
   data () {
     return {
+      selected: [],
       content: [],
       headers: [
         {text:'Name', value:'id'},
-        {text:'Taille', value:'size'},
-        {text:'Create', value:'birthtime'},
+        {text:'Size', value:'size'},
+        {text:'Created', value:'birthtime'},
         {text:'Modified', value:'mtime'}
       ]
     }
@@ -37,11 +40,46 @@ export default {
       return this.content.filter((e) => !e.isfile)
     }
   },
-  mounted() {
-    this.$http.Get('folder'+this.gPath)
-      .then( (data) => this.content = data)
+  watch: {
+    gPath: function (_val, _oldVal) {
+      this.loadFolder()
+    },
+    gFile: function (_val, _oldVal) {
+      this.loadFile()
+    }
   },
-  methods: { 
+  mounted() {
+    this.loadFolder()
+  },
+  methods: {
+    loadFile() {
+      this.$http.Get('file'+this.gFile)
+        .then( )
+    },
+    loadFolder() {
+      this.$http.Get('folder'+this.gPath)
+        .then( (data) => this.content = data)
+    },
+    moveToPathIndex(idx) {
+      this.gPath = idx == 0 ?  '/' : '/' + this.arPath.slice(1,idx+1).join('/')  + '/'
+    },
+    toggleAll () {
+      if (this.selected.length) this.selected = []
+      else this.selected = this.items.slice()
+    },
+    itemIcon(item) {
+      return item.isfile ? 'insert_drive_file' : 'folder'
+    },
+    itemColor(item) {
+      return item.isfile ? 'green darken-3' : 'primary'
+    },
+    openItem(item) {
+      if(item.isfile) {
+        this.gFile = this.gPath + item.id
+      } else {
+        this.gPath += item.id + '/'
+      }
+    },
     customSort(items, index, isDescending) {
       if (index === null) return items
 
@@ -50,8 +88,8 @@ export default {
           return isDescending ? (a.isfile ? -1 : 1) : (a.isfile ? 1 : -1)
         }
         
-        let sortA = getObjectValueByPath(a, index)
-        let sortB = getObjectValueByPath(b, index)
+        let sortA = this.$utils.getObjectValueByPath(a, index)
+        let sortB = this.$utils.getObjectValueByPath(b, index)
 
         if (isDescending) {
           [sortA, sortB] = [sortB, sortA]
