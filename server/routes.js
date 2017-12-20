@@ -51,7 +51,7 @@ function processFolder(folderName, res) {
           isfile: s.isFile(),
           size: s.size,
           mtime: s.mtime,
-          birthtime: s.birthtime
+          birthtime: s.atime
         })
       }
     })
