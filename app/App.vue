@@ -65,7 +65,7 @@ export default {
     }
   },
   created: function() {
-    window.app = this
+    Vue.prototype.$app = this
   },
   methods: {
     toggleMini() {
