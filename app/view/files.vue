@@ -3,7 +3,7 @@
     SectionHeader(nomargin)
       v-breadcrumbs(large)
         v-breadcrumbs-item(v-for="(path, idx) in arPath" @click.native="moveToPathIndex(idx)") {{ path }}
-    v-data-table.elevation-1(v-model="selected" select-all :headers="headers" :items="content" :custom-sort="customSort" :rows-per-page-items="[25,50,{ text: 'All', value: -1 }]")
+    v-data-table.elevation-1(v-model="selected" select-all :headers="headers" :items="gContent" :custom-sort="customSort" :rows-per-page-items="[25,50,{ text: 'All', value: -1 }]")
       template(slot="items" slot-scope="props")
         td: v-checkbox(primary hide-details v-model="props.selected")
         td.headline(@click="openItem(props.item)")
@@ -20,7 +20,7 @@ export default {
   data () {
     return {
       selected: [],
-      content: [],
+      // content: [],
       headers: [
         {text:'Name', value:'id'},
         {text:'Size', value:'size'},
@@ -34,32 +34,21 @@ export default {
       return ('Home'+this.gPath).split('/')
     },
     files() {
-      return this.content.filter((e) => e.isfile)
+      return this.gContent.filter((e) => e.isfile)
     },
     folders() {
-      return this.content.filter((e) => !e.isfile)
-    }
-  },
-  watch: {
-    gPath: function (_val, _oldVal) {
-      this.loadFolder()
-    },
-    gFile: function (_val, _oldVal) {
-      this.loadFile()
+      return this.gContent.filter((e) => !e.isfile)
     }
   },
   mounted() {
-    this.loadFolder()
+    this.gPath = '/'
+    this.$app.loadFolder()
   },
   methods: {
-    loadFile() {
-      this.$http.Get('file'+this.gFile)
-        .then( )
-    },
-    loadFolder() {
-      this.$http.Get('folder'+this.gPath)
-        .then( (data) => this.content = data)
-    },
+    // loadFile() {
+    //   this.$http.Get('file'+this.gFile)
+    //     .then( )
+    // },
     moveToPathIndex(idx) {
       this.gPath = idx == 0 ?  '/' : '/' + this.arPath.slice(1,idx+1).join('/')  + '/'
     },

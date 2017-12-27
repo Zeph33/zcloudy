@@ -15,8 +15,8 @@ components.forEach(component => Vue.component(component.name, component))
 // add all mixins storage
 mixins.forEach( mixin => Vue.mixin(mixin) )
 
-//createLocalState({ states: ['settings'] })(store)
-createLocalState({})(store)
+createLocalState({ modules: ['settings'] })(store)
+// createLocalState({})(store)
 
 Vue.use(Router)
 const router = new Router({

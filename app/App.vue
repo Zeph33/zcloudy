@@ -64,10 +64,26 @@ export default {
       rightDrawer: false,
     }
   },
+  watch: {
+    gPath: function (_val, _oldVal) {
+      this.loadFolder()
+    },
+    gFile: function (_val, _oldVal) {
+      this.loadFile()
+    }
+  },
   created: function() {
     Vue.prototype.$app = this
   },
   methods: {
+    loadFile() {
+      this.$http.Get('file'+this.gFile)
+        .then( )
+    },
+    loadFolder() {
+      this.$http.Get('folder'+this.gPath)
+        .then( (data) => this.gSetContent(data))
+    },    
     toggleMini() {
       this.setMini(!this.mini)
       this.$nextTick(this.$refs.vnav.updateApplication)

@@ -1,5 +1,13 @@
 <template lang="pug">
-  SectionHeader Pictures
+  div
+    SectionHeader Pictures
+    v-container(fluid grid-list-md)
+      v-layout(row wrap)
+        v-flex(xs6 sm4 md3 lg2 xl1 v-for="n in 9" :key="n")
+          v-card(flat tile)
+            v-card-media(
+              :src="`https://unsplash.it/150/300?image=${Math.floor(Math.random() * 100) + 1}`"
+              height="150px")
 </template>
 
 <script>
