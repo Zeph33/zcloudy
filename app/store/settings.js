@@ -14,15 +14,15 @@ const mutations = {
 
 const getters = {
   test(state) { return state.test },
-  mini(state) { return state.mini },
-  title(state) { return state.title }
+  navMini(state) { return state.mini },
+  appTitle(state) { return state.title }
 }
 
 const actions = {
-  setMini(store, mini) {
+  setNavMini(store, mini) {
     store.commit('SET_MINI', mini === true)
   },
-  setTitle(store, title) {
+  setAppTitle(store, title) {
     store.commit('SET_TITLE', title)
   }
 }
@@ -39,8 +39,8 @@ import { mapActions, mapGetters } from 'vuex'
 export const mixins = {
   computed: {
     ...mapGetters([
-      'mini',
-      'title'])
+      'navMini',
+      'appTitle'])
   },
-  methods: mapActions(['setMini', 'setTitle'])
+  methods: mapActions(['setNavMini', 'setAppTitle'])
 }

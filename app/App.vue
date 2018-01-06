@@ -6,7 +6,7 @@
       v-alert(color="error" v-model="msg.error.show" dismissible) {{ msg.error.msg }}
       v-alert(color="warning" v-model="msg.warning.show" dismissible) {{ msg.warning.msg }}
       v-alert(color="info" v-model="msg.info.show" dismissible) {{ msg.info.msg }}
-    v-navigation-drawer(ref="vnav" dark stateless fixed :mini-variant="mini" :clipped="clipped" mini-variant-width="55" width="180" v-model="drawer" app)
+    v-navigation-drawer(ref="vnav" dark stateless fixed :mini-variant="navMini" :clipped="clipped" mini-variant-width="55" width="180" v-model="drawer" app)
       v-list
         v-list-tile(v-for="(item, i) in items" :key="i" router :to="item.to")
           v-list-tile-action
@@ -21,7 +21,7 @@
       //-   v-icon web
       //- v-btn(icon @click.native.stop="fixed = !fixed")
       //-   v-icon remove
-      v-toolbar-title(v-text="title")
+      v-toolbar-title(v-text="appTitle")
       v-spacer
       v-btn(icon @click.native.stop="rightDrawer = !rightDrawer")
         v-icon menu
@@ -85,7 +85,7 @@ export default {
         .then( (data) => this.gSetContent(data))
     },    
     toggleMini() {
-      this.setMini(!this.mini)
+      this.setNavMini(!this.mini)
       this.$nextTick(this.$refs.vnav.updateApplication)
     },
     showerror(msg) { this.showmsg(msg, 'error')},
