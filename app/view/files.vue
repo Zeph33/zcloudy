@@ -6,7 +6,7 @@
     v-data-table.elevation-1(v-model="selected" select-all :headers="headers" :items="gContent" :custom-sort="customSort" :rows-per-page-items="[25,50,{ text: 'All', value: -1 }]")
       template(slot="items" slot-scope="props")
         td: v-checkbox(primary hide-details v-model="props.selected")
-        td.headline(@click="openItem(props.item)")
+        td.headline.click(@click="openItem(props.item)")
           v-icon.pa-2(:color="itemColor(props.item)" large) {{ itemIcon(props.item) }}
           | {{ props.item.id }}
         td.text-xs-right {{ props.item.isfile ? $utils.humanSize(props.item.size) : '' }}
