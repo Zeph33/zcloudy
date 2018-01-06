@@ -30,7 +30,7 @@ module.exports = {
   },
   plugins: {
     stylus: {
-      modules: true
+      modules: false
     },
     pug: {
       locals: { MIN: minJsCss , VUETIFY_SRC: vuetifySrc},
