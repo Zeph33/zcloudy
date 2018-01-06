@@ -30,8 +30,8 @@ function isObject(obj) {
   return typeof obj === 'object' && toString(obj) === "[object Object]"
 }
 
-const isArray = Array.isArray || function (obj) {
-  return toString(obj) === '[object Array]'
+function isArray(obj) {
+  return Array.isArray ? Array.isArray(obj) : toString(obj) === '[object Array]'
 }
 
 function isBoolean(obj) {
