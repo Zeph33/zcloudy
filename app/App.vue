@@ -69,7 +69,7 @@ export default {
       this.loadFolder()
     },
     gFile: function (_val, _oldVal) {
-      this.loadFile()
+      // this.loadFile()
     }
   },
   created: function() {
@@ -77,8 +77,7 @@ export default {
   },
   methods: {
     loadFile() {
-      this.$http.Get('file'+this.gFile)
-        .then( )
+      return this.$http.Get('file'+this.gFile)
     },
     loadFolder() {
       this.$http.Get('folder'+this.gPath)
