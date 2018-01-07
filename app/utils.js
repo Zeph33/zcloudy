@@ -1,5 +1,14 @@
 'use strict'
-export { humanSize, getObjectValueByPath, isObject, isEmpty, isArray, isBoolean, hasProperty, toString, objSet, objGet, merge }
+export { downloadURI, humanSize, getObjectValueByPath, isObject, isEmpty, isArray, isBoolean, hasProperty, toString, objSet, objGet, merge }
+
+function downloadURI(uri, name) {
+  let link = document.createElement("a")
+  link.download = name
+  link.href = uri
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
 
 function hasProperty(obj, prop) {
   if (obj == null) {
