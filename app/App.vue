@@ -27,6 +27,7 @@
         v-icon menu
     v-content
       v-container(fluid)
+        v-progress-linear.zprogress(v-show="showProgress" indeterminate)
         v-slide-y-transition(mode="out-in")
           router-view
     v-navigation-drawer(fixed touchless temporary :right="right" v-model="rightDrawer" app)
@@ -48,6 +49,7 @@ export default {
       drawer: true,
       fixed: true,
       error: false,
+      showProgress: false,
       msg: {
         info: { show:false, msg: '', timeout: null },
         warning: { show:false, msg: '', timeout: null },
@@ -65,23 +67,35 @@ export default {
     }
   },
   watch: {
-    gPath: function (_val, _oldVal) {
-      this.loadFolder()
-    },
-    gFile: function (_val, _oldVal) {
-      // this.loadFile()
-    }
+    // gPath: function (_val, _oldVal) {
+    //   this.loadFolder()
+    // },
+    // gFile: function (_val, _oldVal) {
+    //   this.loadFile()
+    // }
   },
   created: function() {
     Vue.prototype.$app = this
   },
   methods: {
-    loadFile() {
-      return this.$http.Get('file'+this.gFile)
+    setPath(newPath) {
+      this.showProgress = true
+      this.loadFolder(newPath)
+        .then( (data) => {
+          this.gSetContent(data)
+          this.gPath = newPath
+        })
+        .catch(() => this.showerror('Can\'t load folder: '+ newPath))
+        .finally( () => this.showProgress = false)
     },
-    loadFolder() {
-      this.$http.Get('folder'+this.gPath)
-        .then( (data) => this.gSetContent(data))
+    setFile(newFile) {
+      this.gFile = newFile
+    },
+    loadFile(file=this.gFile) {
+      return this.$http.Get('file'+file)
+    },
+    loadFolder(path=this.gPath) {
+      return this.$http.Get('folder'+path)
     },    
     toggleMini() {
       this.setNavMini(!this.mini)
@@ -107,6 +121,9 @@ export default {
 </script>
 
 <style lang="stylus">
+  .zprogress
+    position: absolute
+    margin-top: -5px
   .no-text-transform
     text-transform: none
   .navigation-drawer--mini-variant .list__tile

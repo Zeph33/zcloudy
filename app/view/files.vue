@@ -41,8 +41,7 @@ export default {
     }
   },
   mounted() {
-    this.gPath = '/'
-    this.$app.loadFolder()
+    this.$app.setPath('/')
   },
   methods: {
     // loadFile() {
@@ -50,7 +49,7 @@ export default {
     //     .then( )
     // },
     moveToPathIndex(idx) {
-      this.gPath = idx == 0 ?  '/' : '/' + this.arPath.slice(1,idx+1).join('/')  + '/'
+      this.$app.setPath( idx == 0 ?  '/' : '/' + this.arPath.slice(1,idx+1).join('/')  + '/')
     },
     toggleAll () {
       if (this.selected.length) this.selected = []
@@ -65,9 +64,9 @@ export default {
     openItem(item) {
       if(item.isfile) {
         this.$utils.downloadURI('file' + this.gPath + item.id, item.id)
-        // this.gFile = this.gPath + item.id
+        this.$app.setFile(this.gPath + item.id)
       } else {
-        this.gPath += item.id + '/'
+        this.$app.setPath( this.gPath + item.id + '/')
       }
     },
     customSort(items, index, isDescending) {
