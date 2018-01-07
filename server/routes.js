@@ -1,15 +1,18 @@
 const router = require('express').Router()
 const fs = require('fs')
 const path = require('path')
+const junk = require('./tools/junk')
 // const mime = require('mime')
-
-const folderBase = path.resolve(__dirname, '..', 'app')
+const config = require('./config/config.json')
+const folderBase = path.resolve(config.basedir) // path.resolve(__dirname, '..', 'app')
 /* Serve the Tree */
-router.get('/folder/*', function(req, res) {
+router.get('/folder/*', function(req, res, next) {
   const folderName = req.path.substr(8)
   const _p = path.resolve(folderBase, folderName)
   if (_p.substr(0,folderBase.length) === folderBase) {
-    processFolder(_p, res)
+    processFolder(_p)
+      .then(v => res.json(v))
+      .catch(e => next(e))
   } else {
     res.json([])
   }
@@ -29,7 +32,7 @@ router.get('/file/*', function (req, res, next) {
       'x-sent': true
     }
   }
-  let fileName = req.path.substr(6)
+  let fileName = decodeURI(req.path.substr(6))
   res.sendFile(fileName, options, function (err) {
     if (err) {
       next(err);
@@ -39,24 +42,31 @@ router.get('/file/*', function (req, res, next) {
   })
 })
 
-function processFolder(folderName, res) {
-  let resp = []
-  fs.readdir(folderName, function(err, arFile) {
-    arFile.forEach(fileName => {
-      const f = path.join(folderName, fileName)
-      let s = fs.statSync(f)
-      if(s.isFile() || s.isDirectory()) {
-        resp.push({
-          id: fileName,
-          isfile: s.isFile(),
-          size: s.size,
-          mtime: s.mtime,
-          birthtime: s.atime
+function processFolder(folderName) {
+  return new Promise((resolve, reject) => {
+    let resp = []
+    let folder = decodeURI(folderName)
+    fs.readdir(folder, function(err, arFile) {
+      if (err) {
+        reject(err);
+      } else {
+        arFile.filter(junk.not).forEach(fileName => {
+          const f = path.join(folder, fileName)
+          let s = fs.statSync(f)
+          if(s.isFile() || s.isDirectory()) {
+            resp.push({
+              id: fileName,
+              isfile: s.isFile(),
+              size: s.size,
+              mtime: s.mtime,
+              birthtime: s.atime
+            })
+          }
         })
+        console.log('Folder:', folder);
       }
+      resolve(resp)
     })
-    res.json(resp)
   })
 }
-
 module.exports = router;
