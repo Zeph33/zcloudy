@@ -64,7 +64,8 @@ export default {
     },
     openItem(item) {
       if(item.isfile) {
-        this.gFile = this.gPath + item.id
+        this.$utils.downloadURI('file' + this.gPath + item.id, item.id)
+        // this.gFile = this.gPath + item.id
       } else {
         this.gPath += item.id + '/'
       }
