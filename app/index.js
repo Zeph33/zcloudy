@@ -5,8 +5,16 @@ import { store } from './store'
 import mixins from './mixins'
 import App from './App'
 import components from './components'
+import Inter from './components/inter'
 import * as utils from './utils'
 import zHttp from './api/remote'
+import locales from './locales'
+
+Vue.use(Inter)
+const inter = new Inter({
+  locale: 'en',
+  locales
+})
 
 mixins(Vue)
 Vue.prototype.$http = window.zHttp = new zHttp()
@@ -27,6 +35,7 @@ const router = new Router({
 
 export const app = new Vue({
   el: '#app',
+  inter,
   router,
   store,
   render: h => h(App)
