@@ -21,17 +21,17 @@ export default {
     return {
       selected: [],
       // content: [],
-      headers: [
-        {text:'Name', value:'id'},
-        {text:'Size', value:'size'},
-        {text:'Created', value:'birthtime'},
-        {text:'Modified', value:'mtime'}
-      ]
     }
   },
   computed: {
+    headers() { return [
+      {text:this.$i('files.header.name'), value:'id'},
+      {text:this.$i('files.header.size'), value:'size'},
+      {text:this.$i('files.header.created'), value:'birthtime'},
+      {text:this.$i('files.header.modified'), value:'mtime'}
+    ]},
     arPath() {
-      return ('Home'+this.gPath).split('/')
+      return (this.$i('files.home')+this.gPath).split('/')
     },
     files() {
       return this.gContent.filter((e) => e.isfile)
