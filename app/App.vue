@@ -55,16 +55,18 @@ export default {
         warning: { show:false, msg: '', timeout: null },
         error: { show:false, msg: '', timeout: null }
       },
-      items: [
-        { title: 'Files', to: '/files', icon: 'insert_drive_file' },
-        { title: 'Pictures', to: '/pictures', icon: 'insert_photo' },
-        { title: 'Calendars', to: '/calendars', icon: 'insert_invitation', disabled: false },
-        { title: 'Contacts', to: '/contacts', icon: 'people', disabled: false },
-        { title: 'Settings', to: '/settings', icon: 'settings', disabled: false },
-      ],
       right: true,
       rightDrawer: false,
     }
+  },
+  computed: {
+    items() { return [
+      { title: this.$i('nav.files'), to: '/files', icon: 'insert_drive_file' },
+      { title: this.$i('nav.pictures'), to: '/pictures', icon: 'insert_photo' },
+      { title: this.$i('nav.calendars'), to: '/calendars', icon: 'insert_invitation', disabled: false },
+      { title: this.$i('nav.contacts'), to: '/contacts', icon: 'people', disabled: false },
+      { title: this.$i('nav.settings'), to: '/settings', icon: 'settings', disabled: false },
+    ]}
   },
   watch: {
     // gPath: function (_val, _oldVal) {
@@ -76,8 +78,13 @@ export default {
   },
   created: function() {
     Vue.prototype.$app = this
+    this.$inter.setLocale(this.appLocale)
   },
   methods: {
+    setLocale(locale) {
+      this.$inter.setLocale(locale)
+      this.setAppLocale(locale)
+    },
     setPath(newPath) {
       this.showProgress = true
       this.loadFolder(newPath)
@@ -98,7 +105,7 @@ export default {
       return this.$http.Get('folder'+path)
     },    
     toggleMini() {
-      this.setNavMini(!this.mini)
+      this.setNavMini(!this.navMini)
       this.$nextTick(this.$refs.vnav.updateApplication)
     },
     showerror(msg) { this.showmsg(msg, 'error')},
