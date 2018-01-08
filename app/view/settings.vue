@@ -1,5 +1,5 @@
 <template lang="pug">
-  SectionHeader Settings
+  SectionHeader {{ $i('nav.settings') }}
 </template>
 
 <script>

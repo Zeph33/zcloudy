@@ -1,5 +1,5 @@
 <template lang="pug">
-  SectionHeader Calendars
+  SectionHeader {{ $i('nav.calendars') }}
 </template>
 
 <script>

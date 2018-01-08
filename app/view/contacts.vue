@@ -1,5 +1,5 @@
 <template lang="pug">
-  SectionHeader Contacts
+  SectionHeader {{ $i('nav.contacts') }}
 </template>
 
 <script>
